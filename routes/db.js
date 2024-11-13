@@ -6,13 +6,8 @@ let db;
 let client;
 
 async function connectToDatabase() {
+    client = new MongoClient(uri);
     try {
-        client = new MongoClient(uri, {
-            useNewUrlParser: true, 
-            useUnifiedTopology: true,
-            ssl: true, // Ensure SSL is enabled
-        });
-
         await client.connect();
         console.log('Connected successfully to server');
         db = client.db('CateringServices');
