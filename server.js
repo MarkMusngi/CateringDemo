@@ -1,6 +1,6 @@
 const app = require('./app.js');
 const { connectToDatabase } = require('./routes/db');
-const port = process.env.PORT || 3000; // Use dynamic port from Render or fallback to 3000
+const port = process.env.PORT || 4000; // Use dynamic port from Render or fallback to 3000
 
 connectToDatabase().then(() => {
     app.listen(port, () => {
