@@ -3,11 +3,16 @@ const { MongoClient } = require('mongodb');
 const uri = 'mongodb+srv://markchristianmusngi:64Ko4gT0miP7JnsT@cluster1.mtd8d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1';
 
 let db;
-let client; // Declare the client variable outside of the connect function
+let client;
 
 async function connectToDatabase() {
-    client = new MongoClient(uri);
     try {
+        client = new MongoClient(uri, {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            ssl: true, // Ensure SSL is enabled
+        });
+
         await client.connect();
         console.log('Connected successfully to server');
         db = client.db('CateringServices');
@@ -26,9 +31,9 @@ function getDb() {
 
 async function disconnectFromDatabase() {
     if (client) {
-        await client.close(); // Close the MongoDB client connection
+        await client.close();
         console.log('Disconnected from database');
     }
 }
 
-module.exports = { connectToDatabase,disconnectFromDatabase, getDb };
+module.exports = { connectToDatabase, disconnectFromDatabase, getDb };
