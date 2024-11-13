@@ -3,14 +3,16 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-
+const RedisStore = require('connect-redis')(session);
+const redisClient = require('redis').createClient();
 
 const app = express();
 const port = 3000;
 
 // Session Management
 app.use(session({
-  secret: 'CSSWENG-DEFLORENCE', // Replace with a random string for production
+  store: new RedisStore({ client: redisClient }),
+  secret: 'CATERING-DEMO',
   resave: false,
   saveUninitialized: false
 }));
