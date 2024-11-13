@@ -1,18 +1,12 @@
 const { MongoClient } = require('mongodb');
 
-// Connection URI
-const uri = 'mongodb+srv://markchristianmusngi:64Ko4gT0miP7JnsT@cluster1.mtd8d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1';
+const uri = 'mongodb+srv://markchristianmusngi:64Ko4gT0miP7JnsT@cluster1.mtd8d.mongodb.net/CateringServices?retryWrites=true&w=majority&ssl=true';
 
 let db;
 let client;
 
 async function connectToDatabase() {
-    client = new MongoClient(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        tls: true,  // Ensure SSL (TLS) is enabled
-    });
-
+    client = new MongoClient(uri);
     try {
         await client.connect();
         console.log('Connected successfully to server');
