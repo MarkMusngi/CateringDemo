@@ -3,20 +3,14 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const RedisStore = require('connect-redis').default;
-const { createClient } = require('redis'); 
+
 
 const app = express();
 const port = 3000;
 
-// Initialize the Redis client
-const redisClient = createClient();
-redisClient.connect().catch(console.error); 
-
 // Session Management
 app.use(session({
-  store: new RedisStore({ client: redisClient }),
-  secret: 'CATERING-DEMO',
+  secret: 'CSSWENG-DEFLORENCE', // Replace with a random string for production
   resave: false,
   saveUninitialized: false
 }));
