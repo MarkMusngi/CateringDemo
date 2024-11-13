@@ -3,15 +3,20 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 const port = 3000;
 
 // Session Management
 app.use(session({
-  secret: 'CSSWENG-DEFLORENCE', // Replace with a random string for production
+  secret: 'CATERING DEMO', // Replace with a random string for production
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb+srv://markchristianmusngi:64Ko4gT0miP7JnsT@cluster1.mtd8d.mongodb.net/CateringServices?retryWrites=true&w=majority', // Your MongoDB URI
+    ttl: 14 * 24 * 60 * 60 // Session expiry time in seconds (optional)
+  })
 }));
 
 // Set the directory for static assets (e.g., CSS, JavaScript)
