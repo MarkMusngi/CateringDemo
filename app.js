@@ -4,9 +4,10 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo');
+const { connectToDatabase } = require('./routes/db'); // Import the database connection function
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Default port to 3000
 
 // Session Management
 app.use(session({
@@ -48,12 +49,8 @@ const hbs = exphbs.create({
   }
 });
 
-
-
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
-
-
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,6 +62,16 @@ const adminRoutes = require('./routes/admin');
 
 // Mount the routes on the app
 app.use('/', indexRoutes);
-app.use('/', adminRoutes)
+app.use('/', adminRoutes);
+
+// Connect to the database and start the server
+connectToDatabase().then(() => {
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+}).catch(error => {
+  console.error('Failed to connect to database', error);
+  process.exit(1);
+});
 
 module.exports = app;
